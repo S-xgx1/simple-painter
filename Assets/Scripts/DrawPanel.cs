@@ -1,7 +1,8 @@
 using System;
+using System.Threading.Tasks;
+using PunctualSolutionsTool.Tool;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Painter
 {
@@ -9,11 +10,23 @@ namespace Painter
     {
         [SerializeField] TextMeshProUGUI _word;
         [SerializeField] PixelCanvasView _pixelCanvasView;
+        [SerializeField] GameObject      _drawArea;
+        [SerializeField] GameObject      _clearButton;
+        [SerializeField] GameObject      _submitButton;
+        [SerializeField] GameObject      _returnButton;
         public           Texture2D       DrawTexture => _pixelCanvasView.Texture;
         public           void            Clear()     => _pixelCanvasView.Clear();
         public event Action              OnClear;
         public event Action              OnSubmit;
         public event Action              OnReturn;
+
+        public Task WaitSubmit() => TaskConvertTool.WaitTask(x => OnSubmit += x, x => OnSubmit -= x,
+            destroyCancellationToken.CreateLinkedTokenSource());
+
+        public void SetWord(string word)
+        {
+            _word.text = word;
+        }
 
         public void ClearClick()
         {
@@ -28,6 +41,14 @@ namespace Painter
         public void ReturnClick()
         {
             OnReturn?.Invoke();
+        }
+
+        public void EndAllWord()
+        {
+            _word.text = "已完成所有单词";
+            _drawArea.SetActive(false);
+            _clearButton.SetActive(false);
+            _submitButton.SetActive(false);
         }
     }
 }

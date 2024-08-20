@@ -96,6 +96,8 @@ MonoBehaviour:
   _word: {fileID: 6244835870656532442}
   _drawArea: {fileID: 1884058912634530120}
   _overTip: {fileID: 2394933476072157476}
+  _wordRoot: {fileID: 5887648521604051338}
+  _nextButton: {fileID: 3533223070095698817}
 --- !u!1 &2232201201380958494
 GameObject:
   m_ObjectHideFlags: 0
@@ -562,8 +564,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1445,11 +1447,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: NextButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8877830061957711254, guid: c28e160f6218fe74abd7dd8754702873, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c28e160f6218fe74abd7dd8754702873, type: 3}
+--- !u!1 &3533223070095698817 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8877830061957711254, guid: c28e160f6218fe74abd7dd8754702873, type: 3}
+  m_PrefabInstance: {fileID: 5349402030924557847}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6170284806568459511 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2278159063277785824, guid: c28e160f6218fe74abd7dd8754702873, type: 3}

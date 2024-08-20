@@ -423,7 +423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 582d320213fd1ae4793fbc423fb50d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UIRoot: {fileID: 1319544943}
+  <UIRoot>k__BackingField: {fileID: 1319544943}
 --- !u!114 &1587095598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -440,6 +440,18 @@ MonoBehaviour:
   <GuessPanelPrefab>k__BackingField: {fileID: 2271733597833580937, guid: 1ccfe8578a5e0724baeff0802dcb51b1, type: 3}
   <LoginPanelPrefab>k__BackingField: {fileID: 2886075176317979006, guid: d84a693a40e62d542ade977e866b92d4, type: 3}
   <TaskSelectPanelPrefab>k__BackingField: {fileID: -136020196984008055, guid: c0bd473d744e3394cb8b93ef01bc435c, type: 3}
+  <WordStatisticsPanelPrefab>k__BackingField: {fileID: 3707809407599213729, guid: 291dabcb436e7cb44bb617c875f5e105, type: 3}
+  <WordStatisticsItemPrefab>k__BackingField: {fileID: 6739837509882297520, guid: 3e1d7ff246f90ed4681bbd5e6d304ba2, type: 3}
+  <UserStatisticPanelPrefab>k__BackingField: {fileID: 1528395887761491046, guid: 4fd5fab82aa45bc469e63519670cb2ae, type: 3}
+  <UserStatisticItemPrefab>k__BackingField: {fileID: 6956304932010477712, guid: 6f8862b3b62f40a4ab6880631bd9b29b, type: 3}
+  <DrawDetailWindowPrefab>k__BackingField: {fileID: 4219272637217550200, guid: 37cb50637fc18f449a758009b551f9f9, type: 3}
+  <DrawDetailItemPrefab>k__BackingField: {fileID: 8054618134021969541, guid: 0944490a684914947801861847fe04c4, type: 3}
+  <GuessDetailWindowPrefab>k__BackingField: {fileID: 1766116910110695203, guid: f1d93ee4d5e4074489a421293998946e, type: 3}
+  <GuessDetailItemPrefab>k__BackingField: {fileID: 8749234320766793771, guid: 82c81c84ce763434faa4cf9b90fceb6c, type: 3}
+  <UserDrawDetailWindowPrefab>k__BackingField: {fileID: 2293283574253528320, guid: be38098145e9db3468fa2d1d29f9e345, type: 3}
+  <UserDrawDetailItemPrefab>k__BackingField: {fileID: 1698026804180497974, guid: e0a493b0a854366468750b9d5f044b73, type: 3}
+  <UserGuessDetailWindowPrefab>k__BackingField: {fileID: 284263187014089634, guid: 1267205b923b46b48acbcfaeb3dddd57, type: 3}
+  <UserGuessDetailItemPrefab>k__BackingField: {fileID: 8807025714701001954, guid: 183115ce35aa14444b72e7c0fa50cb45, type: 3}
 --- !u!4 &1587095599
 Transform:
   m_ObjectHideFlags: 0

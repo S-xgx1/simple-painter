@@ -1,13 +1,18 @@
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Painter
 {
     public class TaskSelectPanel : MonoBehaviour
     {
-        public event Action OnDraw;
-        public event Action OnGuess;
-        public event Action OnStatistics;
+        [SerializeField] Image           DrawGuessCompletionProgress;
+        [SerializeField] TextMeshProUGUI DrawGuessCompletionText;
+        public event Action              OnDraw;
+        public event Action              OnGuess;
+        public event Action              OnWordStatistics;
+        public event Action              OnUserStatistics;
 
         public void DrawClick()
         {
@@ -19,9 +24,20 @@ namespace Painter
             OnGuess?.Invoke();
         }
 
-        public void StatisticsClick()
+        public void UserStatisticsClick()
         {
-            OnStatistics?.Invoke();
+            OnUserStatistics?.Invoke();
+        }
+
+        public void WordStatisticsClick()
+        {
+            OnWordStatistics?.Invoke();
+        }
+
+        public void UpdateDrawGuessCompletion(float completion)
+        {
+            DrawGuessCompletionProgress.fillAmount = completion;
+            DrawGuessCompletionText.text           = (int)(completion * 100) + "%";
         }
     }
 }
