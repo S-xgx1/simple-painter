@@ -53,12 +53,17 @@ namespace Painter
 
         async UniTaskVoid LoadUserStatisticsPanel()
         {
-            var userStatisticsPanel = await UILoader.LoadPrefab(AssetManager.UserStatisticPanelPrefab);
-            userStatisticsPanel.Close += () => Destroy(userStatisticsPanel.gameObject);
+            var panel = await UILoader.LoadPrefab(AssetManager.UserStatisticPanelPrefab);
+            panel.Close += () => Destroy(panel.gameObject);
             var userStatistics = await NetManager.GetUserInfoDetailList();
-            userStatisticsPanel.SetData(userStatistics).Forget();
-            userStatisticsPanel.OnDrawDetailClick  += value => LoadUserDrawStatisticsPanel(value).Forget();
-            userStatisticsPanel.OnGuessDetailClick += value => LoadUserGuessStatisticsPanel(value).Forget();
+            panel.SetData(userStatistics).Forget();
+            panel.OnDrawDetailClick  += value => LoadUserDrawStatisticsPanel(value).Forget();
+            panel.OnGuessDetailClick += value => LoadUserGuessStatisticsPanel(value).Forget();
+            panel.OnDeleteClick += value =>
+            {
+                NetManager.DeleteUser(value).Forget();
+                panel.DestroyItem(value);
+            };
         }
 
         async UniTaskVoid LoadUserDrawStatisticsPanel(int userId)
@@ -82,15 +87,17 @@ namespace Painter
         async UniTaskVoid LoadDrawPanel()
         {
             var taskSelectPanel = await UILoader.LoadPrefab(AssetManager.DrawPanelPrefab);
-            taskSelectPanel.OnReturn += () => { Destroy(taskSelectPanel.gameObject); };
-            taskSelectPanel.OnClear  += () => { taskSelectPanel.Clear(); };
+            taskSelectPanel.OnReturn += () => Destroy(taskSelectPanel.gameObject);
+            taskSelectPanel.OnClear  += () => taskSelectPanel.Clear();
             var infos = await NetManager.GetAllWords();
             foreach (var wordInfoDto in infos.TakeWhile(_ => taskSelectPanel))
             {
                 taskSelectPanel.SetWord(wordInfoDto.Name);
-                await taskSelectPanel.WaitSubmit();
-                NetManager.Instance.PostImage(new ImageInfoDto(0, wordInfoDto.ID, _userId), taskSelectPanel.DrawTexture)
-                    .Forget();
+                var whenAny = await UniTask.WhenAny(taskSelectPanel.WaitSubmit().AsUniTask(),
+                    taskSelectPanel.WaitNext().AsUniTask());
+                if (whenAny == 0)
+                    NetManager.Instance.PostImage(new ImageInfoDto(0, wordInfoDto.ID, _userId),
+                        taskSelectPanel.DrawTexture).Forget();
                 taskSelectPanel.Clear();
             }
 
@@ -108,8 +115,10 @@ namespace Painter
             {
                 var imageTexture = await NetManager.Instance.GetImageTexture(imageInfoDto.ID);
                 taskSelectPanel.SetTexture(imageTexture);
-                var word = await taskSelectPanel.WaitNext();
-                NetManager.PostGuess(new(0, imageInfoDto.ID, word, _userId)).Forget();
+                var whenAny = await UniTask.WhenAny(taskSelectPanel.WaitSubmit().AsUniTask(),
+                    taskSelectPanel.WaitNext().AsUniTask());
+                if (whenAny.hasResultLeft)
+                    NetManager.PostGuess(new(0, imageInfoDto.ID, whenAny.result, _userId)).Forget();
             }
 
             if (taskSelectPanel)

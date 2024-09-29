@@ -14,9 +14,16 @@ namespace Painter
             Close?.Invoke();
         }
 
-        public event Action<int>       OnDrawDetailClick;
-        public event Action<int>       OnGuessDetailClick;
-        [SerializeField] RectTransform _content;
+        public event Action<int>                     OnDrawDetailClick;
+        public event Action<int>                     OnGuessDetailClick;
+        public event Action<int>                     OnDeleteClick;
+        [SerializeField] RectTransform               _content;
+        readonly         Dictionary<int, GameObject> items = new();
+
+        public void DestroyItem(int id)
+        {
+            Destroy(items[id]);
+        }
 
         public async UniTaskVoid SetData(List<UserInfoDetail> userInfoDetails)
         {
@@ -32,6 +39,8 @@ namespace Painter
                         : (float)userInfoDetail.GuessSuccessCount / userInfoDetail.GuessCount);
                 userStatisticItem.OnDrawDetailClick  += () => OnDrawDetailClick?.Invoke(userInfoDetail.ID);
                 userStatisticItem.OnGuessDetailClick += () => OnGuessDetailClick?.Invoke(userInfoDetail.ID);
+                userStatisticItem.OnDeleteClick      += () => OnDeleteClick?.Invoke(userInfoDetail.ID);
+                items.Add(userInfoDetail.ID, userStatisticItem.gameObject);
             }
         }
     }

@@ -15,16 +15,21 @@ namespace Painter
         [SerializeField] GameObject     _wordRoot;
         [SerializeField] GameObject     _nextButton;
         public           void           SetTexture(Texture2D texture2D) => _drawArea.texture = texture2D;
-        public event Action<string>     OnNext;
+        public event Action     OnNext;
         public event Action             OnReturn;
+        public event Action<string>             OnSubmit;
 
-        public Task<string> WaitNext() => TaskConvertTool.WaitTask<string>(x => OnNext += x, x => OnNext -= x,
+        public Task WaitNext() => TaskConvertTool.WaitTask(x => OnNext += x, x => OnNext -= x,
+            destroyCancellationToken.CreateLinkedTokenSource());
+        public Task<string> WaitSubmit() => TaskConvertTool.WaitTask<string>(x => OnSubmit += x, x => OnSubmit -= x,
             destroyCancellationToken.CreateLinkedTokenSource());
 
         public void NextClick()
         {
-            OnNext?.Invoke(_word.text);
+            OnNext?.Invoke();
         }
+
+        public void SubmitClick() => OnSubmit?.Invoke(_word.text);
 
         public void ReturnClick()
         {

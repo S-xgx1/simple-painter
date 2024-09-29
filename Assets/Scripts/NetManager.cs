@@ -17,7 +17,8 @@ namespace Painter
 
         public async UniTask<UserInfoDto> Login(UserInfoDto userInfo)
         {
-            var unityWebRequest = UnityWebRequest.Post($"{Url}/UserInfo", userInfo.ToJson(), "application/json");
+            var unityWebRequest = UnityWebRequest.Put($"{Url}/UserInfo", userInfo.ToJson());
+            unityWebRequest.SetRequestHeader("Content-Type", "application/json");
             var value           = await unityWebRequest.SendWebRequest();
             if (value.responseCode != 200) Debug.LogError($"{nameof(Login)} send error");
             return value.ToReturn<UserInfoDto>();
@@ -131,6 +132,20 @@ namespace Painter
             await unityWebRequest.SendWebRequest();
             if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(GetWordInfoDetailList)} send error");
             return unityWebRequest.ToReturn<List<WordInfoDetail>>();
+        }
+
+        public async UniTask DeleteUser(int userId)
+        {
+            var unityWebRequest = UnityWebRequest.Delete($"{Url}/UserInfo?id={userId}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(DeleteUser)} send error");
+        }
+
+        public async UniTask ClearWord(int wordId)
+        {
+            var unityWebRequest = UnityWebRequest.Delete($"{Url}/Word/ClearData?wordId={wordId}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(ClearWord)} send error");
         }
     }
 

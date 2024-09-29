@@ -23,6 +23,11 @@ namespace Painter
                 var item = await UILoader.LoadPrefab(AssetManager.Instance.WordStatisticsItemPrefab, _content);
                 item.SetData(info.Name, info.PartSpeech, info.DrawCount);
                 item.OnDrawDetail += () => LoadDrawDetail().Forget();
+                item.OnClear += () =>
+                {
+                    NetManager.Instance.ClearWord(info.ID).Forget();
+                    item.SetData(info.Name, info.PartSpeech, 0);
+                };
                 continue;
 
                 async UniTaskVoid LoadDrawDetail()
