@@ -79,7 +79,8 @@ public static class UIMeshHelper
         vh.AddTriangle(o    + 2, o + 3, o);
     }
 
-    public static void DrawRect(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight, Color cbl, Color ctl, Color cbr, Color ctr)
+    public static void DrawRect(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight, Color cbl, Color ctl, Color cbr,
+                                Color        ctr)
     {
         var o = vh.currentVertCount;
 
@@ -105,7 +106,8 @@ public static class UIMeshHelper
         vh.AddTriangle(o    + 2, o + 3, o);
     }
 
-    public static void DrawRect(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight, Color color) => DrawRect(vh, bottomLeft, topRight, color, color, color, color);
+    public static void DrawRect(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight, Color color) =>
+        DrawRect(vh, bottomLeft, topRight, color, color, color, color);
 
     public static void DrawImage(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight)
     {

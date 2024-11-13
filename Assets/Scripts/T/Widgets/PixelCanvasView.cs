@@ -9,7 +9,7 @@ public class PixelCanvasView : Graphic, IPointerDownHandler, IDragHandler
 {
     public PixelCanvas pixelCanvas;
 
-    private         Texture2D canvasTexture;
+    Texture2D                 canvasTexture;
     public override Texture   mainTexture => canvasTexture;
     public          Texture2D Texture     => canvasTexture;
 
@@ -38,8 +38,8 @@ public class PixelCanvasView : Graphic, IPointerDownHandler, IDragHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         pixelCanvas.selectedIdx = 1;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                rectTransform, eventData.position, null, out Vector2 localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null,
+                                                                out var localPoint);
 
         var (bl, tr) = UIMeshHelper.CalculateCorners(rectTransform);
 
@@ -52,11 +52,11 @@ public class PixelCanvasView : Graphic, IPointerDownHandler, IDragHandler
     }
 
 
-    private void DrawCanvas(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight)
+    void DrawCanvas(VertexHelper vh, Vector2 bottomLeft, Vector2 topRight)
     {
         var o = vh.currentVertCount;
 
-        UIVertex vert = UIVertex.simpleVert;
+        var vert = UIVertex.simpleVert;
 
         vert.position = new Vector2(bottomLeft.x, bottomLeft.y);
         vert.uv0      = new Vector2(0,            0);
@@ -81,8 +81,8 @@ public class PixelCanvasView : Graphic, IPointerDownHandler, IDragHandler
     public void OnDrag(PointerEventData eventData)
     {
         pixelCanvas.selectedIdx = 1;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                rectTransform, eventData.position, null, out Vector2 localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null,
+                                                                out var localPoint);
 
         var (bl, tr) = UIMeshHelper.CalculateCorners(rectTransform);
 

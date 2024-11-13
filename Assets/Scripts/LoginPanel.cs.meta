@@ -1,3 +1,18 @@
 fileFormatVersion: 2
 guid: 08393fbf58e54692a9f1db5ea2c50d0b
-timeCreated: 1723557414
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - _userNameInputField: {instanceID: 0}
+  - _languageInputField: {instanceID: 0}
+  - _sexInputField: {instanceID: 0}
+  - _ageInputField: {instanceID: 0}
+  - _careerInputField: {instanceID: 0}
+  - _educationLevelInputField: {instanceID: 0}
+  - _errorTip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

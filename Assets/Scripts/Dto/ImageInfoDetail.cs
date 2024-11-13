@@ -5,8 +5,8 @@ namespace Painter.Dto
 {
     public class ImageInfoDetail : ImageInfoDto
     {
-        public ImageInfoDetail(int id, int wordId, int userId, int guessCount, int correctCount) : base(id, wordId,
-            userId)
+        public ImageInfoDetail(int id, int wordId, int userId, int guessCount, int correctCount) : base(
+            id, wordId, userId)
         {
         }
 

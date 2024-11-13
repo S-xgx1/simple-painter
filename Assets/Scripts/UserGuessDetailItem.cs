@@ -6,9 +6,14 @@ namespace Painter
 {
     public class UserGuessDetailItem : MonoBehaviour
     {
-        [SerializeField] RawImage        GuessImage;
-        [SerializeField] TextMeshProUGUI GuessText;
-        [SerializeField] TextMeshProUGUI WordText;
+        [SerializeField]
+        RawImage GuessImage;
+
+        [SerializeField]
+        TextMeshProUGUI GuessText;
+
+        [SerializeField]
+        TextMeshProUGUI WordText;
 
         public void SetData(Texture2D guess, string guessText, string wordText)
         {

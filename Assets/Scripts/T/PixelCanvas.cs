@@ -21,8 +21,8 @@ public class PixelCanvas : MonoBehaviour
     {
         selectedIdx = 0;
         img         = new int[width, height];
-        this.Width  = width;
-        this.Height = height;
+        Width       = width;
+        Height      = height;
     }
 
     public int AddColor(Color color)

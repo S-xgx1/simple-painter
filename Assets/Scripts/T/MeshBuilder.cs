@@ -101,7 +101,8 @@ public class MeshBuilder
         return this;
     }
 
-    public MeshBuilder Cube(Vector3 o, float size, Color color, Face cullFaces) => Cuboid(o, size, size, size, color, cullFaces);
+    public MeshBuilder Cube(Vector3 o, float size, Color color, Face cullFaces) =>
+        Cuboid(o, size, size, size, color, cullFaces);
 
     public MeshBuilder Circle(Vector3 o, Vector3 axis, Vector3 radius, int triangleCount, Color color)
     {
@@ -126,7 +127,8 @@ public class MeshBuilder
 
     public MeshBuilder ScaleXYZ(float factorX, float factorY, float factorZ)
     {
-        for (var i = 0; i < vertices.Count; i++) vertices[i] = new(vertices[i].x * factorX, vertices[i].y * factorY, vertices[i].z * factorZ);
+        for (var i = 0; i < vertices.Count; i++)
+            vertices[i] = new(vertices[i].x * factorX, vertices[i].y * factorY, vertices[i].z * factorZ);
         return this;
     }
 

@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using Painter.Dto;
-using PunctualSolutions.RideBicycle;
+using PunctualSolutions.Tool.Singleton;
 using PunctualSolutionsTool.Tool;
 using SimplePainterServer.Dto;
 using UnityEngine;
@@ -11,7 +9,8 @@ using UnityEngine.Networking;
 
 namespace Painter
 {
-    public class NetManager : MonoAutoSingleton<NetManager>
+    [SingletonMono]
+    public partial class NetManager : MonoBehaviour
     {
         const string Url = "http://119.3.163.38:5001";
 
@@ -19,7 +18,7 @@ namespace Painter
         {
             var unityWebRequest = UnityWebRequest.Put($"{Url}/UserInfo", userInfo.ToJson());
             unityWebRequest.SetRequestHeader("Content-Type", "application/json");
-            var value           = await unityWebRequest.SendWebRequest();
+            var value = await unityWebRequest.SendWebRequest();
             if (value.responseCode != 200) Debug.LogError($"{nameof(Login)} send error");
             return value.ToReturn<UserInfoDto>();
         }
@@ -146,6 +145,18 @@ namespace Painter
             var unityWebRequest = UnityWebRequest.Delete($"{Url}/Word/ClearData?wordId={wordId}");
             await unityWebRequest.SendWebRequest();
             if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(ClearWord)} send error");
+        }
+
+        public void OnSingletonInit()
+        {
+        }
+
+        public void Dispose()
+        {
+        }
+
+        static void InAwake()
+        {
         }
     }
 

@@ -5,7 +5,8 @@ namespace Painter
 {
     public class GuessDetailItem : MonoBehaviour
     {
-        [SerializeField] TextMeshProUGUI guessText;
+        [SerializeField]
+        TextMeshProUGUI guessText;
 
         public void SetData(string infoWord)
         {

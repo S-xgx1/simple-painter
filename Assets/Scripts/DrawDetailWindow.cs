@@ -13,7 +13,8 @@ namespace Painter
             Close?.Invoke();
         }
 
-        [SerializeField] RectTransform _content;
+        [SerializeField]
+        RectTransform _content;
 
         public async UniTaskVoid SetData(int wordId)
         {
@@ -23,7 +24,7 @@ namespace Painter
                 var item         = await UILoader.LoadPrefab(AssetManager.Instance.DrawDetailItemPrefab, _content);
                 var imageTexture = await NetManager.Instance.GetImageTexture(info.ID);
                 item.SetData(imageTexture, info.GuessCount,
-                    info.CorrectCount == 0 ? 0 : (float)info.CorrectCount / info.GuessCount);
+                             info.CorrectCount == 0 ? 0 : (float)info.CorrectCount / info.GuessCount);
                 item.OnGuessDetail += () => LoadGuessDetail(info.ID).Forget();
             }
         }

@@ -18,8 +18,8 @@ public class PaletteView : Graphic, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                rectTransform, eventData.position, null, out var localPoint);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform, eventData.position, null,
+                                                                out var localPoint);
 
         var (bl, tr) = UIMeshHelper.CalculateCorners(rectTransform);
 
@@ -40,8 +40,9 @@ public class PaletteView : Graphic, IPointerDownHandler
         var (bl, tr) = UIMeshHelper.CalculateCorners(rectTransform);
         if (selection != null)
         {
-            selection.sizeDelta        = unitSize * Vector2.one;
-            selection.anchoredPosition = unitSize * new Vector2(pixelCanvas.selectedIdx % width, pixelCanvas.selectedIdx / width);
+            selection.sizeDelta = unitSize * Vector2.one;
+            selection.anchoredPosition =
+                unitSize * new Vector2(pixelCanvas.selectedIdx % width, pixelCanvas.selectedIdx / width);
         }
 
         vh.Clear();

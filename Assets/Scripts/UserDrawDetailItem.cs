@@ -6,8 +6,11 @@ namespace Painter
 {
     public class UserDrawDetailItem : MonoBehaviour
     {
-        [SerializeField] RawImage        DrawImage;
-        [SerializeField] TextMeshProUGUI WordText;
+        [SerializeField]
+        RawImage DrawImage;
+
+        [SerializeField]
+        TextMeshProUGUI WordText;
 
         public void SetData(Texture2D drawImage, string wordText)
         {

@@ -15,7 +15,8 @@ namespace Painter
             Close?.Invoke();
         }
 
-        [SerializeField] RectTransform _content;
+        [SerializeField]
+        RectTransform _content;
 
         public async UniTaskVoid SetData(List<GuessDto> data)
         {

@@ -4,12 +4,12 @@
     {
         public ImageInfoDto(int id, int wordId, int userId)
         {
-            ID = id;
+            ID     = id;
             WordId = wordId;
             UserID = userId;
         }
 
-        public int ID { get; set; }
+        public int ID     { get; set; }
         public int WordId { get; set; }
         public int UserID { get; set; }
     }

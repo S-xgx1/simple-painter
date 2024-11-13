@@ -7,12 +7,16 @@ namespace Painter
 {
     public class TaskSelectPanel : MonoBehaviour
     {
-        [SerializeField] Image           DrawGuessCompletionProgress;
-        [SerializeField] TextMeshProUGUI DrawGuessCompletionText;
-        public event Action              OnDraw;
-        public event Action              OnGuess;
-        public event Action              OnWordStatistics;
-        public event Action              OnUserStatistics;
+        [SerializeField]
+        Image DrawGuessCompletionProgress;
+
+        [SerializeField]
+        TextMeshProUGUI DrawGuessCompletionText;
+
+        public event Action OnDraw;
+        public event Action OnGuess;
+        public event Action OnWordStatistics;
+        public event Action OnUserStatistics;
 
         public void DrawClick()
         {

@@ -1,17 +1,33 @@
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using PunctualSolutions.Tool.Singleton;
 using SimplePainterServer.Dto;
 using UnityEngine;
 
 namespace Painter
 {
-    public class MainManager : MonoSingleton<MainManager>
+    [SingletonMono]
+    public class MainManager : MonoBehaviour
     {
-        [field: SerializeField] public Transform UIRoot       { get; private set; }
-        AssetManager                             AssetManager => AssetManager.Instance;
-        NetManager                               NetManager   => NetManager.Instance;
-        int                                      _userId;
-        TaskSelectPanel                          _taskSelectPanel;
+        public void OnSingletonInit()
+        {
+        }
+
+        public void Dispose()
+        {
+        }
+
+        static void InAwake()
+        {
+        }
+
+        [field: SerializeField]
+        public Transform UIRoot { get; private set; }
+
+        AssetManager    AssetManager => AssetManager.Instance;
+        NetManager      NetManager   => NetManager.Instance;
+        int             _userId;
+        TaskSelectPanel _taskSelectPanel;
 
         void Start()
         {
@@ -94,10 +110,10 @@ namespace Painter
             {
                 taskSelectPanel.SetWord(wordInfoDto.Name);
                 var whenAny = await UniTask.WhenAny(taskSelectPanel.WaitSubmit().AsUniTask(),
-                    taskSelectPanel.WaitNext().AsUniTask());
+                                                    taskSelectPanel.WaitNext().AsUniTask());
                 if (whenAny == 0)
-                    NetManager.Instance.PostImage(new ImageInfoDto(0, wordInfoDto.ID, _userId),
-                        taskSelectPanel.DrawTexture).Forget();
+                    NetManager.Instance.PostImage(new(0, wordInfoDto.ID, _userId), taskSelectPanel.DrawTexture)
+                              .Forget();
                 taskSelectPanel.Clear();
             }
 
@@ -116,7 +132,7 @@ namespace Painter
                 var imageTexture = await NetManager.Instance.GetImageTexture(imageInfoDto.ID);
                 taskSelectPanel.SetTexture(imageTexture);
                 var whenAny = await UniTask.WhenAny(taskSelectPanel.WaitSubmit().AsUniTask(),
-                    taskSelectPanel.WaitNext().AsUniTask());
+                                                    taskSelectPanel.WaitNext().AsUniTask());
                 if (whenAny.hasResultLeft)
                     NetManager.PostGuess(new(0, imageInfoDto.ID, whenAny.result, _userId)).Forget();
             }
@@ -126,9 +142,7 @@ namespace Painter
             UpdateDrawGuessCompletion().Forget();
         }
 
-        async UniTaskVoid UpdateDrawGuessCompletion()
-        {
+        async UniTaskVoid UpdateDrawGuessCompletion() =>
             _taskSelectPanel.UpdateDrawGuessCompletion(await NetManager.DrawGuessCompletion());
-        }
     }
 }
