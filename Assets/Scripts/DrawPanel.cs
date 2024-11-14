@@ -15,6 +15,8 @@ namespace Painter
         [SerializeField]
         PixelCanvasView _pixelCanvasView;
 
+        public bool Change => _pixelCanvasView.pixelCanvas.Change;
+
         [SerializeField]
         GameObject _drawArea;
 

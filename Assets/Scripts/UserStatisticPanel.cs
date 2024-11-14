@@ -28,7 +28,7 @@ namespace Painter
             Destroy(items[id]);
         }
 
-        public async UniTaskVoid SetData(List<UserInfoDetail> userInfoDetails)
+        public async UniTaskVoid SetData(List<UserInfoDetail> userInfoDetails, bool isAdmin)
         {
             foreach (var userInfoDetail in userInfoDetails)
             {
@@ -39,7 +39,8 @@ namespace Painter
                                           userInfoDetail.DrawCount, userInfoDetail.GuessCount,
                                           userInfoDetail.GuessSuccessCount == 0
                                               ? 0
-                                              : (float)userInfoDetail.GuessSuccessCount / userInfoDetail.GuessCount);
+                                              : (float)userInfoDetail.GuessSuccessCount / userInfoDetail.GuessCount,
+                                          isAdmin);
                 userStatisticItem.OnDrawDetailClick  += () => OnDrawDetailClick?.Invoke(userInfoDetail.ID);
                 userStatisticItem.OnGuessDetailClick += () => OnGuessDetailClick?.Invoke(userInfoDetail.ID);
                 userStatisticItem.OnDeleteClick      += () => OnDeleteClick?.Invoke(userInfoDetail.ID);

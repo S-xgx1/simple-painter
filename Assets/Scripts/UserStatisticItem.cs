@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Painter
 {
@@ -33,6 +34,9 @@ namespace Painter
         [SerializeField]
         TextMeshProUGUI GuessImageProbability;
 
+        [SerializeField]
+        Button DeleteButton;
+
         public event Action OnDrawDetailClick;
         public event Action OnGuessDetailClick;
         public event Action OnDeleteClick;
@@ -50,7 +54,8 @@ namespace Painter
         public void DeleteClick() => OnDeleteClick?.Invoke();
 
         public void SetData(string inName,         string language, string sex, string age, string career,
-                            string educationLevel, int drawImageCount, int guessImageCount, float guessImageProbability)
+                            string educationLevel, int drawImageCount, int guessImageCount, float guessImageProbability,
+                            bool   isDeleteButtonActive)
         {
             Name.text                  = inName;
             Language.text              = language;
@@ -61,6 +66,7 @@ namespace Painter
             DrawImageCount.text        = drawImageCount.ToString();
             GuessImageCount.text       = guessImageCount.ToString();
             GuessImageProbability.text = guessImageProbability.ToString("0.00%");
+            DeleteButton.gameObject.SetActive(isDeleteButtonActive);
         }
     }
 }

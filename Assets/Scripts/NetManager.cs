@@ -12,7 +12,8 @@ namespace Painter
     [SingletonMono]
     public partial class NetManager : MonoBehaviour
     {
-        const string Url = "http://119.3.163.38:5001";
+        const        string Url        = "http://119.3.163.38:5001";
+        public const string ADMIN_NAME = "Admin";
 
         public async UniTask<UserInfoDto> Login(UserInfoDto userInfo)
         {
@@ -21,6 +22,15 @@ namespace Painter
             var value = await unityWebRequest.SendWebRequest();
             if (value.responseCode != 200) Debug.LogError($"{nameof(Login)} send error");
             return value.ToReturn<UserInfoDto>();
+        }
+
+        public async UniTask<UserInfoDto> Login(string userName)
+        {
+            var unityWebRequest = UnityWebRequest.Get($"{Url}/UserInfo/OrUserName?userName={userName}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode == 404) return null;
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(Login)} send error");
+            return unityWebRequest.ToReturn<UserInfoDto>();
         }
 
         public async UniTask Test()
@@ -67,6 +77,14 @@ namespace Painter
             await www.SendWebRequest();
             if (www.responseCode != 200) Debug.LogError($"{nameof(GetImageTexture)} send error");
             return DownloadHandlerTexture.GetContent(www);
+        }
+
+        public async UniTask<string[]> GetImageTextureTipWords(int id)
+        {
+            var unityWebRequest = UnityWebRequest.Get($"{Url}/Image/TipWords?id={id}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(GetImageTextureTipWords)} send error");
+            return unityWebRequest.ToReturn<string[]>();
         }
 
         public async UniTask<GuessDto> PostGuess(GuessDto guessDto)
@@ -145,6 +163,21 @@ namespace Painter
             var unityWebRequest = UnityWebRequest.Delete($"{Url}/Word/ClearData?wordId={wordId}");
             await unityWebRequest.SendWebRequest();
             if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(ClearWord)} send error");
+        }
+
+        public async UniTask DeleteWord(int wordId)
+        {
+            var unityWebRequest = UnityWebRequest.Delete($"{Url}/Word?id={wordId}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(DeleteWord)} send error");
+        }
+
+        public async UniTask AddWord(string word, string partOfSpeech)
+        {
+            var wordInfo        = new WordInfoDto(0, word, partOfSpeech);
+            var unityWebRequest = UnityWebRequest.Post($"{Url}/Word", wordInfo.ToJson(), "application/json");
+            var value           = await unityWebRequest.SendWebRequest();
+            if (value.responseCode != 200) Debug.LogError($"{nameof(AddWord)} send error");
         }
 
         public void OnSingletonInit()

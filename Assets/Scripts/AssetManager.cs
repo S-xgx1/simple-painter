@@ -65,5 +65,8 @@ namespace Painter
 
         [field: SerializeField]
         public UserGuessDetailItem UserGuessDetailItemPrefab { get; private set; }
+
+        [field: SerializeField]
+        public AddWordPanel AddWordPanelPrefab { get; set; }
     }
 }

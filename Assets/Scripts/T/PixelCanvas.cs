@@ -9,8 +9,8 @@ public class PixelCanvas : MonoBehaviour
 {
     public List<Color> palette = new();
     public int[,]      img;
-
-    public int Width { get; private set; }
+    public bool        Change { get; private set; }
+    public int         Width  { get; private set; }
 
     public int Height { get; private set; }
 
@@ -34,6 +34,7 @@ public class PixelCanvas : MonoBehaviour
 
     public void SetPixel(int x, int y)
     {
+        Change = true;
         SetPixel(selectedIdx, x, y);
     }
 
@@ -52,9 +53,12 @@ public class PixelCanvas : MonoBehaviour
 
     public Texture2D Clear()
     {
+        Change = false;
         ClearPixel();
-        var texture = new Texture2D(Width, Height);
-        texture.filterMode = FilterMode.Point;
+        var texture = new Texture2D(Width, Height)
+                      {
+                          filterMode = FilterMode.Point,
+                      };
 
         for (var y = 0; y < Height; y++)
         for (var x = 0; x < Width; x++)

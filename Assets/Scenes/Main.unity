@@ -452,6 +452,7 @@ MonoBehaviour:
   <UserDrawDetailItemPrefab>k__BackingField: {fileID: 1698026804180497974, guid: e0a493b0a854366468750b9d5f044b73, type: 3}
   <UserGuessDetailWindowPrefab>k__BackingField: {fileID: 284263187014089634, guid: 1267205b923b46b48acbcfaeb3dddd57, type: 3}
   <UserGuessDetailItemPrefab>k__BackingField: {fileID: 8807025714701001954, guid: 183115ce35aa14444b72e7c0fa50cb45, type: 3}
+  <AddWordPanelPrefab>k__BackingField: {fileID: 9005310381491707576, guid: 9fac0cb38f19c7043a8788cee79d9050, type: 3}
 --- !u!4 &1587095599
 Transform:
   m_ObjectHideFlags: 0

@@ -29,29 +29,42 @@ namespace Painter
         [SerializeField]
         GameObject _errorTip;
 
-        public event Action<int> OnLogin;
+        public event Action<UserInfoDto> OnLogin;
 
         public void LoginClick()
         {
-            if (string.IsNullOrWhiteSpace(_userNameInputField.text) ||
-                string.IsNullOrWhiteSpace(_languageInputField.text) || string.IsNullOrWhiteSpace(_sexInputField.text) ||
-                string.IsNullOrWhiteSpace(_ageInputField.text) || string.IsNullOrWhiteSpace(_careerInputField.text) ||
-                string.IsNullOrWhiteSpace(_educationLevelInputField.text))
+            UniTask.Action(async () =>
             {
-                _errorTip.SetActive(true);
-                return;
-            }
-
-            In().Forget();
+                if (!string.IsNullOrWhiteSpace(_userNameInputField.text) && UserNameOtherIsBlank())
+                {
+                    var userInfoDto = await NetManager.Instance.Login(_userNameInputField.text);
+                    if (userInfoDto == null)
+                        _errorTip.SetActive(true);
+                    else
+                    {
+                        OnLogin?.Invoke(userInfoDto);
+                        Destroy(gameObject);
+                    }
+                }
+                else if (UserNameOtherIsBlank())
+                    _errorTip.SetActive(true);
+                else
+                    Login().Forget();
+            }).Invoke();
             return;
 
-            async UniTaskVoid In()
+            bool UserNameOtherIsBlank() =>
+                string.IsNullOrWhiteSpace(_languageInputField.text) || string.IsNullOrWhiteSpace(_sexInputField.text) ||
+                string.IsNullOrWhiteSpace(_ageInputField.text) || string.IsNullOrWhiteSpace(_careerInputField.text) ||
+                string.IsNullOrWhiteSpace(_educationLevelInputField.text);
+
+            async UniTaskVoid Login()
             {
                 UserInfoDto userInfoDto = new(0, _userNameInputField.text, _languageInputField.text,
                                               _sexInputField.text, _ageInputField.text, _careerInputField.text,
                                               _educationLevelInputField.text);
                 var infoDto = await NetManager.Instance.Login(userInfoDto);
-                OnLogin?.Invoke(infoDto.ID);
+                OnLogin?.Invoke(infoDto);
                 Destroy(gameObject);
             }
         }
