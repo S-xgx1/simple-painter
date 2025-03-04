@@ -45,7 +45,7 @@ namespace Painter
             for (var index = 0; index < _tipTexts.Count; index++)
             {
                 var textMeshProUGUI = _tipTexts[index];
-                textMeshProUGUI.text = tips[index];
+                textMeshProUGUI.SetText(tips[index]);
             }
         }
 

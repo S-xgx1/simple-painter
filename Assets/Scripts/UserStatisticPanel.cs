@@ -40,7 +40,7 @@ namespace Painter
                                           userInfoDetail.GuessSuccessCount == 0
                                               ? 0
                                               : (float)userInfoDetail.GuessSuccessCount / userInfoDetail.GuessCount,
-                                          isAdmin);
+                                          isAdmin, userInfoDetail.Progress);
                 userStatisticItem.OnDrawDetailClick  += () => OnDrawDetailClick?.Invoke(userInfoDetail.ID);
                 userStatisticItem.OnGuessDetailClick += () => OnGuessDetailClick?.Invoke(userInfoDetail.ID);
                 userStatisticItem.OnDeleteClick      += () => OnDeleteClick?.Invoke(userInfoDetail.ID);

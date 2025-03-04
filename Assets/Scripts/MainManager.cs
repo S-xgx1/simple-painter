@@ -56,7 +56,7 @@ namespace Painter
             _taskSelectPanel.OnGuess          += () => LoadGuessPanel().Forget();
             _taskSelectPanel.OnUserStatistics += () => LoadUserStatisticsPanel().Forget();
             _taskSelectPanel.OnWordStatistics += () => LoadWordStatisticsPanel().Forget();
-            UpdateDrawGuessCompletion().Forget();
+            UpdateProgress();
         }
 
         async UniTaskVoid LoadWordStatisticsPanel()
@@ -82,7 +82,7 @@ namespace Painter
 
             void PanelOnAdd(string word, string partOfSpeech)
             {
-                NetManager.AddWord(word, partOfSpeech).Forget();
+                NetManager.AddWord(word, partOfSpeech, _userInfo.ID).Forget();
             }
         }
 
@@ -141,6 +141,7 @@ namespace Painter
                             NetManager.Instance
                                       .PostImage(new(0, wordInfoDto.ID, _userInfo.ID), taskSelectPanel.DrawTexture)
                                       .Forget();
+                            LoadSubmitWindow("Create Success").Forget();
                             break;
                         case 0 when !taskSelectPanel.Change:
                             await Wait();
@@ -153,7 +154,14 @@ namespace Painter
 
             if (taskSelectPanel)
                 taskSelectPanel.EndAllWord();
-            UpdateDrawGuessCompletion().Forget();
+            UpdateProgress();
+        }
+
+        async UniTaskVoid LoadSubmitWindow(string content)
+        {
+            var submitWindow = await UILoader.LoadPrefab(AssetManager.SubmitWindowPrefab);
+            submitWindow.Close   += () => Destroy(submitWindow.gameObject);
+            submitWindow.Content =  content;
         }
 
         async UniTaskVoid LoadGuessPanel()
@@ -166,19 +174,23 @@ namespace Painter
                 await Wait();
                 continue;
 
-                async UniTask Wait()
+                async UniTask Wait(string[] tipWords = null)
                 {
                     while (true)
                     {
-                        var imageTexture         = await NetManager.Instance.GetImageTexture(imageInfoDto.ID);
-                        var imageTextureTipWords = await NetManager.Instance.GetImageTextureTipWords(imageInfoDto.ID);
-                        taskSelectPanel.SetTexture(imageTexture, imageTextureTipWords);
+                        var imageTexture = await NetManager.Instance.GetImageTexture(imageInfoDto.ID);
+                        tipWords ??= await NetManager.Instance.GetImageTextureTipWords(imageInfoDto.ID);
+
+                        taskSelectPanel.SetTexture(imageTexture, tipWords);
                         var whenAny = await UniTask.WhenAny(taskSelectPanel.WaitSubmit().AsUniTask(),
                                                             taskSelectPanel.WaitNext().AsUniTask());
                         switch (whenAny.hasResultLeft)
                         {
                             case true when !string.IsNullOrWhiteSpace(whenAny.result):
-                                NetManager.PostGuess(new(0, imageInfoDto.ID, whenAny.result, _userInfo.ID)).Forget();
+                                var guess = await NetManager.PostGuess(
+                                                new(0, imageInfoDto.ID, whenAny.result, _userInfo.ID));
+
+                                LoadSubmitWindow(guess.IsCorrect ? "Guess Success" : "Guess Failed").Forget();
                                 break;
                             case true when string.IsNullOrWhiteSpace(whenAny.result):
                                 continue;
@@ -191,10 +203,19 @@ namespace Painter
 
             if (taskSelectPanel)
                 taskSelectPanel.EndAll();
+            UpdateProgress();
+        }
+
+        void UpdateProgress()
+        {
             UpdateDrawGuessCompletion().Forget();
+            UpdatePersonalProgress().Forget();
         }
 
         async UniTaskVoid UpdateDrawGuessCompletion() =>
             _taskSelectPanel.UpdateDrawGuessCompletion(await NetManager.DrawGuessCompletion());
+
+        async UniTaskVoid UpdatePersonalProgress() =>
+            _taskSelectPanel.UpdatePersonalProgress(await NetManager.GetPersonalProgress(_userInfo.ID));
     }
 }

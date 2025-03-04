@@ -12,8 +12,9 @@
 
         public int ID { get; set; }
 
-        public int    ImageId { get; set; }
-        public string Word    { get; set; }
-        public int    UserID  { get; set; }
+        public int    ImageId   { get; set; }
+        public string Word      { get; set; }
+        public int    UserID    { get; set; }
+        public bool   IsCorrect { get; set; } = false;
     }
 }

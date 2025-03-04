@@ -11,7 +11,13 @@ namespace Painter
         Image DrawGuessCompletionProgress;
 
         [SerializeField]
+        Image PersonalProgress;
+
+        [SerializeField]
         TextMeshProUGUI DrawGuessCompletionText;
+
+        [SerializeField]
+        TextMeshProUGUI PersonalProgressText;
 
         public event Action OnDraw;
         public event Action OnGuess;
@@ -42,6 +48,12 @@ namespace Painter
         {
             DrawGuessCompletionProgress.fillAmount = completion;
             DrawGuessCompletionText.text           = (int)(completion * 100) + "%";
+        }
+
+        public void UpdatePersonalProgress(double progress)
+        {
+            PersonalProgress.fillAmount = (float)progress;
+            PersonalProgressText.text   = (int)(progress * 100) + "%";
         }
     }
 }

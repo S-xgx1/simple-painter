@@ -453,6 +453,9 @@ MonoBehaviour:
   <UserGuessDetailWindowPrefab>k__BackingField: {fileID: 284263187014089634, guid: 1267205b923b46b48acbcfaeb3dddd57, type: 3}
   <UserGuessDetailItemPrefab>k__BackingField: {fileID: 8807025714701001954, guid: 183115ce35aa14444b72e7c0fa50cb45, type: 3}
   <AddWordPanelPrefab>k__BackingField: {fileID: 9005310381491707576, guid: 9fac0cb38f19c7043a8788cee79d9050, type: 3}
+  <SubmitWindowPrefab>k__BackingField: {fileID: 2137533039014180859, guid: 1e61c3785b6bd7849b883fc284d1008f, type: 3}
+  <TimeStatisticsItem>k__BackingField: {fileID: 2492881571053390736, guid: d0953d15bfe26a948a9188fb46417b1a, type: 3}
+  <TimeStatisticsWindow>k__BackingField: {fileID: 2173091360291557010, guid: 91364e42bd445c446b3c13cba2b7ff09, type: 3}
 --- !u!4 &1587095599
 Transform:
   m_ObjectHideFlags: 0

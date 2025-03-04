@@ -1,6 +1,7 @@
 using System;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Painter
@@ -19,6 +20,18 @@ namespace Painter
         [SerializeField]
         Button _clearButton;
 
+        [SerializeField]
+        Button _removeButton;
+
+        [SerializeField]
+        Button _timeButton;
+
+        public event UnityAction OnTime
+        {
+            add => _timeButton.onClick.AddListener(value);
+            remove => _timeButton.onClick.RemoveListener(value);
+        }
+
         public event Action OnDrawDetail;
         public event Action OnClear;
         public event Action OnRemove;
@@ -32,6 +45,7 @@ namespace Painter
             partSpeechText.text = partSpeech;
             drawCountText.text  = drawCount.ToString();
             _clearButton.gameObject.SetActive(enableClear);
+            _removeButton.gameObject.SetActive(enableClear);
         }
     }
 }

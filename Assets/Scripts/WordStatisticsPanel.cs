@@ -44,6 +44,11 @@ namespace Painter
                     NetManager.Instance.DeleteWord(info.ID).Forget();
                     Destroy(item.gameObject);
                 };
+                item.OnTime += UniTask.UnityAction(async () =>
+                {
+                    var window = await UILoader.LoadPrefab(AssetManager.Instance.TimeStatisticsWindow);
+                    window.SetData(await NetManager.Instance.GetCreateTimeList(info.ID)).Forget();
+                });
                 _items.Add(item);
                 continue;
 

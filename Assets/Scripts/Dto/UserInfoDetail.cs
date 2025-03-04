@@ -9,8 +9,9 @@ namespace Painter
         {
         }
 
-        public int DrawCount         { get; set; }
-        public int GuessCount        { get; set; }
-        public int GuessSuccessCount { get; set; }
+        public int    DrawCount         { get; set; }
+        public int    GuessCount        { get; set; }
+        public int    GuessSuccessCount { get; set; }
+        public double Progress          { get; set; }
     }
 }

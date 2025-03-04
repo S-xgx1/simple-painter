@@ -1577,7 +1577,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DrawGuessCompletionProgress: {fileID: 4293715034768281300}
+  PersonalProgress: {fileID: 2862494803575479845}
   DrawGuessCompletionText: {fileID: 8857621959758846693}
+  PersonalProgressText: {fileID: 7548340073645455254}
 --- !u!1 &7806735067103101521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1701,7 +1703,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2792321349989930057}
   m_Layer: 5
-  m_Name: DrawGuessCompletion (1)
+  m_Name: PersonalProgress
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

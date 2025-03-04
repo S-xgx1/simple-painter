@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using Painter.Dto;
+using Painter.SimplePainterServer.Model;
 using PunctualSolutions.Tool.Singleton;
 using PunctualSolutionsTool.Tool;
 using SimplePainterServer.Dto;
@@ -12,7 +13,9 @@ namespace Painter
     [SingletonMono]
     public partial class NetManager : MonoBehaviour
     {
-        const        string Url        = "http://119.3.163.38:5001";
+        const string Url = "http://119.3.163.38:5001";
+
+        //const        string Url        = "http://127.0.0.1:5001";
         public const string ADMIN_NAME = "Admin";
 
         public async UniTask<UserInfoDto> Login(UserInfoDto userInfo)
@@ -167,17 +170,33 @@ namespace Painter
 
         public async UniTask DeleteWord(int wordId)
         {
-            var unityWebRequest = UnityWebRequest.Delete($"{Url}/Word?id={wordId}");
+            var unityWebRequest = UnityWebRequest.Delete($"{Url}/Word?wordId={wordId}");
             await unityWebRequest.SendWebRequest();
             if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(DeleteWord)} send error");
         }
 
-        public async UniTask AddWord(string word, string partOfSpeech)
+        public async UniTask AddWord(string word, string partOfSpeech, int userId)
         {
-            var wordInfo        = new WordInfoDto(0, word, partOfSpeech);
+            var wordInfo        = new WordInfoDto(0, word, partOfSpeech, userId);
             var unityWebRequest = UnityWebRequest.Post($"{Url}/Word", wordInfo.ToJson(), "application/json");
             var value           = await unityWebRequest.SendWebRequest();
             if (value.responseCode != 200) Debug.LogError($"{nameof(AddWord)} send error");
+        }
+
+        public async UniTask<double> GetPersonalProgress(int userId)
+        {
+            var unityWebRequest = UnityWebRequest.Get($"{Url}/UserInfo/PersonalProgress?id={userId}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(GetPersonalProgress)} send error");
+            return double.Parse(unityWebRequest.downloadHandler.text);
+        }
+
+        public async UniTask<List<WordCreateTimeDto>> GetCreateTimeList(int id)
+        {
+            var unityWebRequest = UnityWebRequest.Get($"{Url}/Word/CreateTimeList?id={id}");
+            await unityWebRequest.SendWebRequest();
+            if (unityWebRequest.responseCode != 200) Debug.LogError($"{nameof(GetCreateTimeList)} send error");
+            return unityWebRequest.ToReturn<List<WordCreateTimeDto>>();
         }
 
         public void OnSingletonInit()
